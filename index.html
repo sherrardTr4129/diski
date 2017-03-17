@@ -138,9 +138,27 @@
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.z	= 0.5
 	markerRoot.add( mesh );
-	
+	var isIncreasing = 1
+	var count = 0.001;
 	onRenderFcts.push(function(){
-		mesh.rotation.x = 0.8
+		mesh.rotation.x = 0.6 
+		if(isIncreasing == 1)
+		{
+			mesh.position.z += count;
+		}
+		else if(isIncreasing == 0)
+		{
+			mesh.position.z -= count;
+		}
+		if(mesh.position.z > 0.6)
+		{
+			isIncreasing = 0;
+		}
+		else if(mesh.position.z < 0.4)
+		{
+			isIncreasing = 1;
+		}
+		
 	})
 
 	//////////////////////////////////////////////////////////////////////////////////

@@ -13,9 +13,6 @@
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>	
 </div><script>
-	//////////////////////////////////////////////////////////////////////////////////
-	//		Init
-	//////////////////////////////////////////////////////////////////////////////////
 
 	// init renderer
 	var renderer	= new THREE.WebGLRenderer({
@@ -35,37 +32,26 @@
 
 	// init scene and camera
 	var scene	= new THREE.Scene();
-
+	
+	// add ambient light to the scene to make sure pattern is found 
 	var ambient = new THREE.AmbientLight( 0x666666 );
 	scene.add( ambient );
 
+	// add directional light to help the pattern to be seen in 
+	// all lighting conditions
 	var directionalLight = new THREE.DirectionalLight( 0x887766 );
 	directionalLight.position.set( -1, 1, 1 ).normalize();
 	scene.add( directionalLight );
 	
-	//////////////////////////////////////////////////////////////////////////////////
-	//		Initialize a basic camera
-	//////////////////////////////////////////////////////////////////////////////////
 
 	// Create a camera
 	var camera = new THREE.Camera();
 	scene.add(camera);
 
-	////////////////////////////////////////////////////////////////////////////////
-	//          handle arToolkitSource
-	////////////////////////////////////////////////////////////////////////////////
-
 	var arToolkitSource = new THREEx.ArToolkitSource({
 		// to read from the webcam 
 		sourceType : 'webcam',
-		
-		// to read from an image
-		// sourceType : 'image',
-		// sourceUrl : '../../data/images/img.jpg',		
-
-		// to read from a video
-		// sourceType : 'video',
-		// sourceUrl : '../../data/videos/headtracking.mp4',		
+				
 	})
 
 	arToolkitSource.init(function onReady(){
@@ -78,11 +64,7 @@
 		// handle arToolkitSource resize
 		arToolkitSource.onResize(renderer.domElement)		
 	})	
-	////////////////////////////////////////////////////////////////////////////////
-	//          initialize arToolkitContext
-	////////////////////////////////////////////////////////////////////////////////
 	
-
 	// create atToolkitContext
 	var arToolkitContext = new THREEx.ArToolkitContext({
 		cameraParametersUrl: 'AR.js/data/data/camera_para.dat',
@@ -105,11 +87,7 @@
 		arToolkitContext.update( arToolkitSource.domElement )
 	})
 	
-	
-	////////////////////////////////////////////////////////////////////////////////
-	//          Create a ArMarkerControls
-	////////////////////////////////////////////////////////////////////////////////
-	
+		
 	var markerRoot = new THREE.Group
 	scene.add(markerRoot)
 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
@@ -118,10 +96,7 @@
 		// patternUrl : '../../data/data/patt.kanji'
 	})
 
-	//////////////////////////////////////////////////////////////////////////////////
-	//		add an object in the scene
-	//////////////////////////////////////////////////////////////////////////////////
-
+	
         var geometry	= new THREE.CubeGeometry(1,1,1);
         var material	= new THREE.MeshNormalMaterial({
 		transparent : true,
@@ -161,9 +136,7 @@
 		
 	})
 
-	//////////////////////////////////////////////////////////////////////////////////
-	//		render the whole thing on the page
-	//////////////////////////////////////////////////////////////////////////////////
+	
 	var stats = new Stats();
 	document.body.appendChild( stats.dom );
 	// render the scene

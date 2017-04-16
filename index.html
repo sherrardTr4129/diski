@@ -115,7 +115,10 @@
 	markerRoot.add( mesh );
 	var isIncreasing = 1
 	var count = 0.001;
+	
+	// callback for rendering everything
 	onRenderFcts.push(function(){
+		//conditionals that give the breathing effect.
 		mesh.rotation.x = 0.6 
 		if(isIncreasing == 1)
 		{
@@ -136,7 +139,7 @@
 		
 	})
 
-	
+	//generate the FPS stats graph seen in top left 
 	var stats = new Stats();
 	document.body.appendChild( stats.dom );
 	// render the scene
